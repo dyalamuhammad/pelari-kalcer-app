@@ -18,9 +18,18 @@ const defaultIcon = L.icon({
 
 const currentIcon = L.divIcon({
   className: "",
-  html: `<div style="width:16px;height:16px;border-radius:9999px;background:#f97316;border:3px solid white;box-shadow:0 0 0 4px rgba(249,115,22,0.3)"></div>`,
-  iconSize: [16, 16],
-  iconAnchor: [8, 8],
+  html: `
+    <div style="position:relative;width:20px;height:20px">
+      <span style="position:absolute;inset:0;border-radius:9999px;background:#0A84FF;opacity:.5;animation:pulse 1.8s ease-out infinite"></span>
+      <span style="position:absolute;inset:3px;border-radius:9999px;background:#0A84FF;border:2px solid white;box-shadow:0 0 0 4px rgba(10,132,255,.25)"></span>
+    </div>
+    <style>
+      @keyframes pulse{0%{transform:scale(.6);opacity:.6}100%{transform:scale(2);opacity:0}}
+      @media (prefers-reduced-motion: reduce){span{animation:none!important}}
+    </style>
+  `,
+  iconSize: [20, 20],
+  iconAnchor: [10, 10],
 });
 
 type RunMapProps = {
@@ -83,17 +92,24 @@ export default function RunMap({
         zoomControl={false}
         className="h-full w-full"
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        url={`https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=${process.env.NEXT_PUBLIC_CARTO_KEY}`}
+        maxZoom={20}
+      />
 
-        {polyline.length > 1 ? (
-          <Polyline
-            positions={polyline}
-            pathOptions={{ color: "#f97316", weight: 5, opacity: 0.9 }}
-          />
-        ) : null}
+      {polyline.length > 1 ? (
+        <Polyline
+          positions={polyline}
+          pathOptions={{
+            color: "#64D2FF",
+            weight: 5,
+            opacity: 0.95,
+            lineCap: "round",
+            lineJoin: "round",
+          }}
+        />
+      ) : null}
 
         {points.length > 0 ? (
           <Marker

@@ -24,12 +24,9 @@ function BigRoundButton({
   variant?: "primary" | "danger" | "neutral";
 }) {
   const variants: Record<string, string> = {
-    primary:
-      "bg-orange-500 hover:bg-orange-400 text-white shadow-lg shadow-orange-500/30",
-    danger:
-      "bg-red-500/90 hover:bg-red-500 text-white shadow-lg shadow-red-500/30",
-    neutral:
-      "bg-white/10 hover:bg-white/15 text-white border border-white/10",
+    primary: "glass-primary hover:brightness-110",
+    danger: "glass border-red-500/60 text-red-400 hover:border-red-500",
+    neutral: "glass text-white hover:brightness-110",
   };
 
   return (
@@ -38,7 +35,7 @@ function BigRoundButton({
       aria-label={label}
       className={[
         "flex h-20 w-20 items-center justify-center rounded-full",
-        "transition-transform active:scale-95",
+        "transition-transform duration-200 active:scale-95",
         variants[variant],
       ].join(" ")}
     >

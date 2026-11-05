@@ -1,4 +1,16 @@
 @import "tailwindcss";
+@source "../app/**/*.{ts,tsx}";
+@source "../components/**/*.{ts,tsx}";
+
+@theme {
+  --color-bg: #05070f;
+  --color-primary: #0a84ff;
+  --color-primary-soft: #64d2ff;
+  --color-ink: #ffffff;
+  --color-muted: rgba(255, 255, 255, 0.65);
+  --color-glass: rgba(255, 255, 255, 0.1);
+  --color-glass-border: rgba(255, 255, 255, 0.18);
+}
 
 :root {
   color-scheme: dark;
@@ -6,8 +18,8 @@
 
 html,
 body {
-  background-color: #0a0a0a;
-  color: #fafafa;
+  background-color: #05070f;
+  color: #ffffff;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -15,8 +27,60 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* Pastikan container peta Leaflet mengikuti parent */
 .leaflet-container {
-  background: #18181b;
+  background: #05070f;
   font-family: inherit;
+}
+
+/* ==== Efek kaca ==== */
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.06)
+  );
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.glass-primary {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, #0a84ff 95%, white),
+    color-mix(in srgb, #0a84ff 70%, transparent)
+  );
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 8px 24px rgba(10, 132, 255, 0.45);
+  color: #fff;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass,
+  .glass-primary {
+    background: rgba(20, 28, 45, 0.92);
+  }
+}
+
+/* Fokus keyboard tetap terlihat */
+:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

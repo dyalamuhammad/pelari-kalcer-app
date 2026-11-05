@@ -9,7 +9,7 @@ import type { TrackPoint } from "@/lib/geo";
 const RunMap = dynamic(() => import("@/components/RunMap"), {
   ssr: false,
   loading: () => (
-    <div className="h-64 w-full animate-pulse rounded-2xl bg-white/5" />
+    <div className="glass h-64 w-full animate-pulse rounded-3xl" />
   ),
 });
 
@@ -30,13 +30,13 @@ export function SummaryView({
 }: SummaryViewProps) {
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500/20 text-orange-400">
+      <div className="glass flex items-center gap-3 rounded-3xl p-4">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-primary-soft">
           <Trophy className="h-5 w-5" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-white">Rute selesai</h2>
-          <p className="text-sm text-zinc-400">Rekap hasil lari kamu</p>
+          <h2 className="text-xl font-bold text-ink">Rute selesai</h2>
+          <p className="text-sm text-muted">Rekap hasil lari kamu</p>
         </div>
       </div>
 
@@ -58,24 +58,28 @@ export function SummaryView({
           value={formatPace(avgSpeedKmh)}
           unit="/km"
           icon={Gauge}
+          accent
         />
       </div>
 
       <div>
-        <p className="mb-2 text-xs uppercase tracking-wider text-zinc-400">
+        <p className="mb-2 text-xs uppercase tracking-wider text-muted">
           Peta rute
         </p>
-        <RunMap
-          points={points}
-          currentPosition={null}
-          follow={false}
-          className="h-64 w-full"
-        />
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 rounded-b-3xl bg-gradient-to-t from-black/50 to-transparent" />
+          <RunMap
+            points={points}
+            currentPosition={null}
+            follow={false}
+            className="h-64 w-full rounded-3xl"
+          />
+        </div>
       </div>
 
       <button
         onClick={onRestart}
-        className="rounded-2xl bg-orange-500 px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-orange-400 active:scale-[0.98]"
+        className="glass-primary rounded-full px-6 py-4 text-base font-semibold transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
       >
         Lari lagi
       </button>

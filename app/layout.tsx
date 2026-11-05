@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import { BackgroundGlow } from "@/components/BackgroundGlow";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -8,8 +10,14 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "RunTrack",
+  title: "SpeedTrack",
   description: "Rekam lari kamu secara real-time dengan GPS.",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "SpeedTrack",
+  },
 };
 
 export const viewport: Viewport = {
@@ -27,7 +35,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={geist.variable}>
-      <body className="min-h-dvh bg-neutral-950 font-sans text-neutral-50 antialiased">
+      <body className="min-h-dvh bg-bg font-sans text-ink antialiased">
+        <BackgroundGlow />
+        <ServiceWorkerRegister />
         {children}
       </body>
     </html>
