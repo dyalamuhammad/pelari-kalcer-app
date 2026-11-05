@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet
 import L from "leaflet";
 import type { TrackPoint } from "@/lib/geo";
 import "leaflet/dist/leaflet.css";
+import { LocateFixed } from "lucide-react";
 
 // Perbaiki ikon default Leaflet yang hilang di bundler modern
 const defaultIcon = L.icon({
@@ -36,6 +37,7 @@ type RunMapProps = {
   points: TrackPoint[];
   currentPosition: { lat: number; lng: number } | null;
   follow?: boolean;
+  onLocate?: () => void;
   className?: string;
 };
 
@@ -72,6 +74,7 @@ export default function RunMap({
   points,
   currentPosition,
   follow = true,
+  onLocate,
   className = "",
 }: RunMapProps) {
   const polyline = useMemo(
@@ -128,6 +131,16 @@ export default function RunMap({
         <MapFollower center={currentPosition} follow={follow} />
         <FitBounds points={points} />
       </MapContainer>
+        {onLocate ? (
+      <button
+        type="button"
+        onClick={onLocate}
+        aria-label="Pusatkan ke lokasi saya"
+        className="glass absolute bottom-3 right-3 z-[1000] flex h-11 w-11 items-center justify-center rounded-full text-white transition-transform duration-200 hover:brightness-110 active:scale-95"
+      >
+        <LocateFixed className="h-5 w-5" />
+      </button>
+    ) : null}
     </div>
   );
 }

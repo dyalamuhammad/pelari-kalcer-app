@@ -207,6 +207,24 @@ export function useRunTracker() {
     paceMinPerKm,
   };
 
+  const locate = useCallback(() => {
+  if (typeof navigator === "undefined" || !navigator.geolocation) {
+    setGeoError("Browser ini tidak mendukung Geolocation API.");
+    return;
+  }
+  setGeoError(null);
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      setCurrentPosition({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+      });
+    },
+    handleGeoError,
+    { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 },
+  );
+}, [handleGeoError]);
+
   return {
     status,
     points,
@@ -218,5 +236,6 @@ export function useRunTracker() {
     resume,
     stop,
     reset,
+    locate,
   };
 }

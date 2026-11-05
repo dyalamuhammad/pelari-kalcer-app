@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Activity, AlertTriangle, Clock, MapPin, Gauge } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { ControlButtons } from "@/components/ControlButtons";
@@ -29,6 +29,7 @@ export default function HomePage() {
     resume,
     stop,
     reset,
+    locate,
   } = useRunTracker();
 
   const {
@@ -60,6 +61,10 @@ export default function HomePage() {
     return (stats.distanceM / stats.elapsedSec) * 3.6;
   }, [stats.distanceM, stats.elapsedSec]);
 
+    useEffect(() => {
+    if (status === "idle") locate();
+  }, [status, locate]);
+
   if (status === "finished") {
     return (
       <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-8 pt-6">
@@ -82,6 +87,7 @@ export default function HomePage() {
             points={points}
             currentPosition={currentPosition}
             follow
+            onLocate={locate}
             className="h-full w-full rounded-3xl"
           />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 rounded-b-3xl bg-gradient-to-t from-black/60 to-transparent" />
@@ -158,6 +164,7 @@ export default function HomePage() {
           points={[]}
           currentPosition={currentPosition}
           follow
+            onLocate={locate}
           className="h-full w-full rounded-3xl"
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 rounded-b-3xl bg-gradient-to-t from-black/60 to-transparent" />
