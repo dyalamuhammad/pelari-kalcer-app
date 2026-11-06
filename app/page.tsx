@@ -9,6 +9,7 @@ import { SummaryView } from "@/components/SummaryView";
 import { useRunTracker } from "@/hooks/useRunTracker";
 import { useWakeLock } from "@/hooks/useWakeLock";
 import { formatTime, formatDistance, formatPace } from "@/lib/format";
+import { IosInstallBanner } from "@/components/IosInstallBanner";
 
 const RunMap = dynamic(() => import("@/components/RunMap"), {
   ssr: false,
@@ -193,6 +194,8 @@ export default function HomePage() {
           onReset={handleReset}
         />
       </div>
+
+      <IosInstallBanner />
     </main>
   );
 }
