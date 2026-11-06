@@ -96,10 +96,9 @@ export default function RunMap({
         className="h-full w-full"
       >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        url={`https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=${process.env.NEXT_PUBLIC_CARTO_KEY}`}
-        maxZoom={20}
-      />
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
       {polyline.length > 1 ? (
         <Polyline
@@ -133,13 +132,13 @@ export default function RunMap({
       </MapContainer>
         {onLocate ? (
       <button
-        type="button"
-        onClick={onLocate}
-        aria-label="Pusatkan ke lokasi saya"
-        className="glass absolute bottom-3 right-3 z-[1000] flex h-11 w-11 items-center justify-center rounded-full text-white transition-transform duration-200 hover:brightness-110 active:scale-95"
-      >
-        <LocateFixed className="h-5 w-5" />
-      </button>
+  type="button"
+  onClick={onLocate}
+  aria-label="Pusatkan ke lokasi saya"
+  className="absolute bottom-3 right-3 z-[1000] flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white text-primary shadow-lg shadow-black/20 transition-transform duration-200 hover:bg-neutral-50 active:scale-95"
+>
+  <LocateFixed className="h-5 w-5" strokeWidth={2.5} />
+</button>
     ) : null}
     </div>
   );
